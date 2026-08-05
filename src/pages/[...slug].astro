@@ -1,0 +1,33 @@
+---
+import WebflowPage from "../components/webflow/WebflowPage.astro";
+
+export function getStaticPaths() {
+	const pages = {
+		about: "about",
+		careers: "careers",
+		"expandable-habitat": "expandable-habitat",
+		moon: "moon",
+		thunderbird: "thunderbird",
+		"media-use-agreement": "media-use-agreement",
+		"privacy-policy": "privacy-policy",
+		"terms-and-conditions": "terms-and-conditions",
+		"style-guide": "style-guide",
+		"detail-jobs": "detail-jobs",
+		"detail-progress": "detail-progress",
+		"detail-team": "detail-team",
+	};
+
+	return Object.entries(pages).map(([slug, page]) => ({
+		params: { slug },
+		props: { page },
+	}));
+}
+
+interface Props {
+	page: string;
+}
+
+const { page } = Astro.props;
+---
+
+<WebflowPage page={page} />

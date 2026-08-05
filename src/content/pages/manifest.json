@@ -1,0 +1,95 @@
+{
+  "generatedFrom": "src/webflow-source/original-pages",
+  "pages": [
+    {
+      "page": "unauthorized",
+      "source": "401.html",
+      "sections": 0,
+      "fragments": 19
+    },
+    {
+      "page": "not-found",
+      "source": "404.html",
+      "sections": 0,
+      "fragments": 19
+    },
+    {
+      "page": "about",
+      "source": "about.html",
+      "sections": 9,
+      "fragments": 11
+    },
+    {
+      "page": "careers",
+      "source": "careers.html",
+      "sections": 4,
+      "fragments": 6
+    },
+    {
+      "page": "detail-jobs",
+      "source": "detail_jobs.html",
+      "sections": 0,
+      "fragments": 17
+    },
+    {
+      "page": "detail-progress",
+      "source": "detail_progress.html",
+      "sections": 0,
+      "fragments": 17
+    },
+    {
+      "page": "detail-team",
+      "source": "detail_team.html",
+      "sections": 0,
+      "fragments": 17
+    },
+    {
+      "page": "expandable-habitat",
+      "source": "expandable-habitat.html",
+      "sections": 8,
+      "fragments": 10
+    },
+    {
+      "page": "home",
+      "source": "index.html",
+      "sections": 10,
+      "fragments": 12
+    },
+    {
+      "page": "media-use-agreement",
+      "source": "media-use-agreement.html",
+      "sections": 2,
+      "fragments": 4
+    },
+    {
+      "page": "moon",
+      "source": "moon.html",
+      "sections": 5,
+      "fragments": 7
+    },
+    {
+      "page": "privacy-policy",
+      "source": "privacy-policy.html",
+      "sections": 2,
+      "fragments": 4
+    },
+    {
+      "page": "style-guide",
+      "source": "style-guide.html",
+      "sections": 1,
+      "fragments": 3
+    },
+    {
+      "page": "terms-and-conditions",
+      "source": "terms-and-conditions.html",
+      "sections": 2,
+      "fragments": 4
+    },
+    {
+      "page": "thunderbird",
+      "source": "thunderbird.html",
+      "sections": 7,
+      "fragments": 9
+    }
+  ]
+}

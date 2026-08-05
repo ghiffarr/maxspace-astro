@@ -1,0 +1,282 @@
+
+    </main>
+  </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=690226e2c345fbfaa3d9b197" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="/assets/webflow/scripts/webflow.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/ScrollSmoother.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/ScrollToPlugin.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/TextPlugin.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/ScrambleTextPlugin.min.js" type="text/javascript"></script>
+  <script type="text/javascript">gsap.registerPlugin(SplitText,ScrollTrigger,ScrollSmoother,ScrollToPlugin,TextPlugin,ScrambleTextPlugin);</script>
+  <script>
+  window.addEventListener("load", () => {
+    const lenis = new Lenis({
+      smooth: true,
+      lerp: 0.1,
+      wheelMultiplier: 1,
+      infinite: false,
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  });
+</script>
+  <!-- src="https://6w7jwf.csb.app/global.js" -->
+  <script>
+gsap.registerPlugin(ScrollTrigger);
+//===================================================descripted Text=================================================================
+//=============================================================================================================================
+const scrambleChars =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+// Function for decrypt effect
+function decryptText(el) {
+  const original = el.textContent;
+  const chars = original.split("");
+  let iterations = 0;
+  const maxIterations = chars.length + 5;
+  const interval = setInterval(() => {
+    el.textContent = chars
+      .map((ch, i) => {
+        if (ch === " ") return " ";
+        return i < iterations
+          ? chars[i]
+          : scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+      })
+      .join("");
+    iterations++;
+    if (iterations > chars.length) clearInterval(interval);
+  }, 40);
+}
+// Apply ScrollTrigger to each element
+document.querySelectorAll("[cs-element='descripted']").forEach((el) => {
+  ScrollTrigger.create({
+    trigger: el,
+    start: "top 80%", // when element enters 80% from top
+    onEnter: () => {
+      el.classList.add("active");
+      decryptText(el);
+    },
+    once: true, // run only once
+  });
+});
+const splitTypes = document.querySelectorAll(".is-highlights");
+splitTypes.forEach((char, i) => {
+  const text = new SplitText(char, { types: ["chars", "words"] });
+  gsap.from(text.chars, {
+    scrollTrigger: {
+      trigger: char,
+      start: "-60% 70%",
+      end: "-60% 10%",
+      scrub: true,
+      // markers: true
+    },
+    opacity: 0.4,
+    stagger: 0.1,
+  });
+});
+</script> <!--  Swiper JS  -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!--  Initialize Swiper  -->
+  <!--  src="https://6w7jwf.csb.app/thunderbird.js" -->
+  <script>
+const noHover = window.matchMedia("(hover: none)").matches;
+var swiper2 = new Swiper(".about-team-swiper.swiper", {
+  breakpoints: {
+    200: {
+      slidesPerView: "auto",
+      spaceBetween: 8,
+    },
+    950: {
+      slidesPerView: "2",
+      spaceBetween: 8,
+    },
+  },
+});
+dragableHandler(swiper2, ".about-team-swiper .drag-pagination");
+function dragableHandler(slider, pagination) {
+  const track = document.querySelector(pagination);
+  const handle = track.querySelector(".drag-button");
+  function updateHandle(progress = slider.progress) {
+    const maxX = track.offsetWidth - handle.offsetWidth;
+    handle.style.left = `${progress * maxX}px`;
+  }
+  // Update handle on slide move
+  slider.on("progress", (_, progress) => updateHandle(progress));
+  updateHandle();
+  // --- Drag functionality ---
+  let isDragging = false;
+  function getClientX(e) {
+    return e.touches ? e.touches[0].clientX : e.clientX;
+  }
+  function onDragStart(e) {
+    isDragging = true;
+    handle.style.transition = "none"; // disable smooth animation while dragging
+    document.body.style.userSelect = "none";
+  }
+  function onDragMove(e) {
+    if (!isDragging) return;
+    const rect = track.getBoundingClientRect();
+    let x = getClientX(e) - rect.left - handle.offsetWidth / 2;
+    const maxX = rect.width - handle.offsetWidth;
+    x = Math.max(0, Math.min(x, maxX));
+    const progress = x / maxX;
+    updateHandle(progress);
+    slider.setProgress(progress, 0);
+  }
+  function onDragEnd() {
+    isDragging = false;
+    handle.style.transition = "left 0.3s ease"; // re-enable smooth animation
+    document.body.style.userSelect = "";
+  }
+  // Mouse events
+  handle.addEventListener("mousedown", onDragStart);
+  window.addEventListener("mousemove", onDragMove);
+  window.addEventListener("mouseup", onDragEnd);
+  // Touch events
+  handle.addEventListener("touchstart", onDragStart, { passive: true });
+  window.addEventListener("touchmove", onDragMove, { passive: true });
+  window.addEventListener("touchend", onDragEnd);
+}
+//=============================================================================================================================
+//===================================================Use Cases=================================================================
+//=============================================================================================================================
+const casesCard = document.querySelectorAll(".use-cases_card");
+casesCard.forEach((each, index) => {
+  const list = each.querySelector(".use-cases_card-list-wrapper");
+  const button = each.querySelector(".read-more-button");
+  const sidebar = each.querySelector(".use-cases_card-sidebar");
+  const icon = button.querySelector(".icon.is-2");
+  //icon.style.transform = "translate(-50%,-50%) rotateZ(90deg)";
+  if (each.classList.contains("is-active")) {
+    console.log(index);
+    expand(list);
+    sidebar.style.background = "rgba(10, 18, 22, 0.6)";
+    sidebar.style.backdropFilter = "blur(15px)";
+    button.childNodes[0].innerText = "Read Less";
+    icon.style.transform = "translate(-50%,-50%) rotateZ(0deg)";
+  }
+  if (noHover) {
+    button.addEventListener("click", () => {
+      useCasesAnimation(index);
+    });
+  } else {
+    each.addEventListener("mouseover", () => {
+      useCasesAnimation(index);
+    });
+  }
+});
+function useCasesAnimation(index) {
+  casesCard.forEach((item, itemIndex) => {
+    const list = item.querySelector(".use-cases_card-list-wrapper");
+    const button = item.querySelector(".read-more-button");
+    const sidebar = item.querySelector(".use-cases_card-sidebar");
+    const icon = button.querySelector(".icon.is-2");
+    // icon.style.transform = "translate(-50%,-50%) rotateZ(90deg)";
+    if (itemIndex == index) {
+      if (!item.classList.contains("is-active")) {
+        item.classList.add("is-active");
+        expand(list);
+        sidebar.style.background = "rgba(10, 18, 22, 0.6)";
+        sidebar.style.transitionDelay = "0s";
+        sidebar.style.backdropFilter = "blur(15px)";
+        button.childNodes[0].innerText = "Read Less";
+        icon.style.transform = "translate(-50%,-50%) rotateZ(0deg)";
+      }
+    } else {
+      if (item.classList.contains("is-active")) {
+        collapse(list);
+        item.classList.remove("is-active");
+        button.childNodes[0].innerText = "Read more";
+        sidebar.style.transitionDelay = "0.4s";
+        sidebar.style.background = "transparent";
+        sidebar.style.backdropFilter = " none";
+        icon.style.transform = "translate(-50%,-50%) rotateZ(90deg)";
+      }
+    }
+  });
+}
+function expand(element) {
+  gsap.fromTo(
+    element,
+    { height: 0 },
+    {
+      height: "100%",
+      duration: 0.5,
+      ease: "power2.inOut",
+      // onComplete: () => (element.style.height = "auto"),
+    }
+  );
+}
+function collapse(element) {
+  gsap.to(element, {
+    height: 0,
+    duration: 0.5,
+    ease: "power2.inOut",
+  });
+}
+const video = document.querySelector("[cs-element='video-player']");
+const playPauseBtn = document.querySelector("[cs-element='play-button']");
+const volumeBtn = document.querySelector("[cs-element='volume-button']");
+// Play / Pause
+playPauseBtn.addEventListener("click", () => {
+  if (video.paused) {
+    video.play();
+    document.querySelector(".pause-icon").style.display = "flex";
+    document.querySelector(".play-icon").style.display = "none";
+  } else {
+    video.pause();
+    document.querySelector(".pause-icon").style.display = "none";
+    document.querySelector(".play-icon").style.display = "flex";
+  }
+});
+// Volume Toggle (Mute / Unmute)
+volumeBtn.addEventListener("click", () => {
+  video.muted = !video.muted;
+  if (video.muted) {
+    document.querySelector(".volume-down").style.display = "flex";
+    document.querySelector(".volume-up").style.display = "none";
+  } else {
+    console.log("test1");
+    document.querySelector(".volume-down").style.display = "none";
+    document.querySelector(".volume-up").style.display = "flex";
+  }
+});
+const d = new Date();
+const day = String(d.getDate()).padStart(2, "0");
+const month = String(d.getMonth() + 1).padStart(2, "0");
+const year = d.getFullYear();
+const formattedDate = `${day}.${month}.${year}`;
+document.querySelector("[mission-value='current-date']").innerText =
+  formattedDate;
+</script>
+  <script>
+(function () {
+  var currentPath = window.location.pathname.replace(/\/$/, "").replace(/\.html$/, "");
+  if (currentPath === "" || currentPath === "/index") {
+    currentPath = "/index";
+  }
+  document.querySelectorAll(".nav_menu .nav_menu_link").forEach(function (link) {
+    var href = link.getAttribute("href") || "";
+    var linkPath;
+    try {
+      linkPath = new URL(href, window.location.origin).pathname.replace(/\/$/, "").replace(/\.html$/, "");
+    } catch (error) {
+      return;
+    }
+    var isCurrent = currentPath !== "/index" && linkPath === currentPath;
+    link.classList.toggle("w--current", isCurrent);
+    if (isCurrent) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+})();
+</script>
+</body>
+</html>

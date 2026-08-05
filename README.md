@@ -1,43 +1,97 @@
-# Astro Starter Kit: Minimal
+# Max Space Astro
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Astro reconstruction of [getmaxspace.com](https://www.getmaxspace.com/), based
+on Josh's Webflow export and the asset-complete
+[`ghiffarr/maxspace-v0`](https://github.com/ghiffarr/maxspace-v0) repository.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Josh's original ZIP and the `maxspace-v0` checkout remain unchanged. The Astro
+project now separates preserved source, editable page sections, shared rendering
+logic, and production assets so future changes have one predictable home.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/webflow/
+│   └── WebflowPage.astro          # shared fragment renderer and clean links
+├── content/pages/
+│   ├── home/                      # one numbered file per homepage section
+│   ├── about/                     # one directory per page
+│   └── ...
+├── pages/                         # Astro route entry points
+└── webflow-source/
+    └── original-pages/            # preserved monolithic import snapshot
+
+public/assets/webflow/
+├── fonts/
+├── images/
+│   └── captured/
+├── scripts/
+├── styles/
+└── videos/
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+The numbered files in `src/content/pages/<page>/` are the primary editable
+source. Their names follow the Webflow section classes and their numeric prefixes
+keep them in document order. For example, the home hero is
+`src/content/pages/home/010-home-hero.html`, while the shared page renderer is
+`src/components/webflow/WebflowPage.astro`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Pages that contain semantic Webflow sections are split automatically. Empty CMS
+template exports stay as a single `000-page-document.html` because they contain
+no editable page body in the supplied export.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Routes
 
-## 🧞 Commands
+- `/`
+- `/about`
+- `/careers`
+- `/expandable-habitat`
+- `/moon`
+- `/thunderbird`
+- `/media-use-agreement`
+- `/privacy-policy`
+- `/terms-and-conditions`
+- `/style-guide`
+- `/detail-jobs`
+- `/detail-progress`
+- `/detail-team`
 
-All commands are run from the root of the project, from a terminal:
+Astro also generates the supplied `404` page.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Development
 
-## 👀 Want to learn more?
+```sh
+npm install
+npx astro dev --background
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Manage the background server with:
+
+```sh
+npx astro dev status
+npx astro dev logs
+npx astro dev stop
+```
+
+## Verification
+
+```sh
+npm run audit:assets
+npm run build
+```
+
+## Rebuilding section files
+
+The organized section files are intended to be edited directly. To create them
+from the preserved Webflow snapshot when the directory does not yet exist:
+
+```sh
+npm run organize:webflow
+```
+
+Passing `-- --force` replaces every editable section with the preserved source,
+so use it only when you intentionally want to discard section-level edits.
+
+The current visual comparison and interaction results are recorded in
+`design-qa.md`.

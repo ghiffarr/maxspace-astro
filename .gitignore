@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# local visual reference captures
+.codex-reference/
+
 # macOS-specific files
 .DS_Store
 
